@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 设定为开发模式：文件修改后自动重新加载 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 指定主题为simple -->
+	<constant name="struts.ui.theme" value="simple" />
+	
+	<package name="default" namespace="/" extends="struts-default">
+
+		<!-- 全局的result配置 -->
+		<global-results>
+			<result name="input">input.jsp</result>
+			<result name="privilegeError">privilegeError.jsp</result>
+		</global-results>
+	
+		<!-- struts2与spring整合后，class属性中写的是bean的id或者名称 -->
+		<action name="testAction" class="testAction">
+			<result name="success">/test.jsp</result>
+		</action>
+		
+		<!-- 用户登录注销 --> 
+		<action name="loginLogoutAction_*" class="loginLogoutAction" method="{1}">
+			<result name="loginUI">/loginUI.jsp</result>
+			<result name="registerUI">/registerUI.jsp</result>
+			<result name="logout" >/WEB-INF/jsp/loginLogoutAction/logout.jsp</result><!--无效 -->
+			<result name="toIndex" type="redirectAction">indexAction_index</result>
+		</action>
+		
+		<!-- 主页面 -->
+		<action name="indexAction_*" class="indexAction" method="{1}">
+			<result name="index">/WEB-INF/jsp/indexAction/index.jsp</result>
+			<result name="top" >/WEB-INF/jsp/indexAction/top.jsp</result>
+			<result name="left" >/WEB-INF/jsp/indexAction/left.jsp</result>
+			<result name="right" >/WEB-INF/jsp/indexAction/right.jsp</result>
+			<result name="bottom" >/WEB-INF/jsp/indexAction/bottom.jsp</result>
+		</action>
+		
+		<!-- 基本信息简介 -->
+		<action name="baseInfoAction_*" class="baseInfoAction" method="{1}">
+			<result name="maizeBaseInfo">/WEB-INF/jsp/baseInfoAction/maizeBaseInfo.jsp</result>
+			<result name="disasterBaseInfo">/WEB-INF/jsp/baseInfoAction/disasterBaseInfo.jsp</result>
+		</action>
+		
+		<!-- 灾害图片上传 -->
+		<action name="disasterInfoUploadAction_*" class="disasterInfoUploadAction" method="{1}">
+			<result name="addSuccess" type="redirectAction">disasterInfoAction_list</result>
+		</action>
+		
+		<!-- 灾害信息 -->
+		<action name="disasterInfoAction_*" class="disasterInfoAction" method="{1}">
+			<!-- 综合查询 -->
+			<result name="list">/WEB-INF/jsp/disasterInfoAction/list.jsp</result>
+			<!-- 按病虫害名称查询 -->
+			<result name="listName">/WEB-INF/jsp/disasterInfoAction/listName.jsp</result>
+			<!-- 按病虫害类型查询 -->
+			<result name="listType">/WEB-INF/jsp/disasterInfoAction/listType.jsp</result>
+			<!-- 按时间查询 -->
+			<result name="listYears">/WEB-INF/jsp/disasterInfoAction/listYears.jsp</result>
+			
+			<result name="find">/WEB-INF/jsp/disasterInfoAction/find.jsp</result>
+			<result name="addUI">/WEB-INF/jsp/disasterInfoAction/addUI.jsp</result>
+			<result name="listSearch">/WEB-INF/jsp/disasterInfoAction/listSearch.jsp</result>
+			<result name="detail">/WEB-INF/jsp/disasterInfoAction/detail.jsp</result>
+			<result name="toList"  type="redirectAction">disasterInfoAction_list</result>
+			
+			<!-- 统计分析 -->
+			<result name="tatisticsProvince">/WEB-INF/jsp/disasterInfoAction/tatisticsProvince.jsp</result>
+			<result name="tatisticsTypes">/WEB-INF/jsp/disasterInfoAction/tatisticsTypes.jsp</result>
+		</action>
+		
+		<!-- 灾害图片-->
+		<action name="fileUploadAction_*" class="fileUploadAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/fileUploadAction/list.jsp</result>
+		</action>
+		
+		<!-- 用户管理 -->
+		<action name="userAction_*" class="userAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="editUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">userAction_list?id=${id}</result>
+			
+			<!-- 个人信息 -->
+			<result name="infomation">/WEB-INF/jsp/userAction/infomation.jsp</result>
+			<result name="editInfomationUI">/WEB-INF/jsp/userAction/editInfomationUI.jsp</result>
+			<result name="save" type="redirectAction">userAction_infomation</result>
+			<result name="updatePasswordUI">/WEB-INF/jsp/userAction/updatePasswordUI.jsp</result>
+			<result name="updatePasswordSuccess">/WEB-INF/jsp/userAction/updatePasswordSuccess.jsp</result>
+		</action>
+		
+		<!-- 我的收藏 -->
+		<action name="collectionsAction_*" class="collectionsAction" method="{1}">
+			<result name="collectionsList">WEB-INF/jsp/collectionsAction/collectionsList.jsp</result>
+			<result name="addCollections" type="redirectAction">disasterInfoAction_list</result>
+			<result name="addCollectionsName" type="redirectAction">disasterInfoAction_listName</result>
+			<result name="addCollectionsType" type="redirectAction">disasterInfoAction_listType</result>
+			<result name="addCollectionsYears" type="redirectAction">disasterInfoAction_listYears</result>
+		</action>
+		
+		<!-- 新闻 -->
+		<action name="newsAction_*" class="newsAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/newsAction/list.jsp</result>
+			<result name="detail">/WEB-INF/jsp/newsAction/detail.jsp</result>
+			<result name="addUI">/WEB-INF/jsp/newsAction/addUI.jsp</result>
+			<result name="editUI">/WEB-INF/jsp/newsAction/editUI.jsp</result>
+			<result name="toList" type="redirectAction">newsAction_list</result>
+		</action>
+		
+		<!-- 公告 -->
+		<action name="noticeAction_*" class="noticeAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/noticeAction/list.jsp</result>
+			<result name="detail">/WEB-INF/jsp/noticeAction/detail.jsp</result>
+			<result name="addUI">/WEB-INF/jsp/noticeAction/addUI.jsp</result>
+			<result name="editUI">/WEB-INF/jsp/noticeAction/editUI.jsp</result>
+			<result name="toList" type="redirectAction">noticeAction_list</result>
+		</action>
+		
+	</package>
+</struts>

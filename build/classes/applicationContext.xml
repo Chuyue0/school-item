@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<!-- 自动扫描与装配bean -->
+	<context:component-scan base-package="com.ty.design"></context:component-scan>
+	
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<!-- 配置sessionFactory（与hibernate整合）-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- 指定hibernate的配置文件的位置 -->
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>	
+		<!-- 配置dataSource -->
+		<property name="dataSource">
+			<bean class="com.mchange.v2.c3p0.ComboPooledDataSource">
+				<!-- 数据库的连接信息 -->
+				<property name="jdbcUrl" value="${jdbcUrl}"></property>
+				<property name="driverClass" value="${driverClass}"></property>
+				<property name="user" value="${username}"></property>
+				<property name="password" value="${password}"></property>
+				<!-- 其它一些配置 -->
+				<property name="initialPoolSize" value="3"></property>
+				<property name="minPoolSize" value="3"></property>
+				<property name="maxPoolSize" value="15"></property>
+				<property name="acquireIncrement" value="300"></property>
+				<property name="maxStatements" value="800"></property>
+				<property name="maxStatementsPerConnection" value="500"></property>
+				<property name="maxIdleTime" value="1800"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 配置声明式事务，使用基于注解的方式 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+</beans>
+
+
+
+

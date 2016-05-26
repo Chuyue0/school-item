@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ty.design.entity">
+    <class name="News" table="des_news">
+        <id name="id" column="id">
+            <generator class="native"/> 
+        </id>
+        <property name="title"></property>
+        <property name="resource"></property>
+        <property name="content" type="text" length="65535"></property>
+        <property name="author"></property>
+        <property name="editor"></property>
+        <property name="times" type="timestamp"></property>
+	</class>
+
+</hibernate-mapping>

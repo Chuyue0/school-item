@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ty.design.entity">
+    <class name="DisasterInfo" table="des_disasterInfo">
+        <id name="id" column="id">
+            <generator class="native"/> 
+        </id>
+        <property name="name"></property>
+        <property name="province"></property>
+        <property name="city"></property>
+        <property name="counties"></property>
+        <property name="years"></property>
+        <property name="updateTime" type="timestamp"></property>
+        <property name="pathogen"></property>
+        <property name="types"></property>
+        <property name="symptoms"></property>
+        <property name="regulation"></property>
+        <property name="collections"></property>
+        
+		<!-- fileUploads属性，我与FileUpload的一对多 -->
+		<set name="fileUploads" inverse="true" cascade="all">   
+			<key column="disaterinfo_id"></key>
+			<one-to-many class="com.ty.design.entity.FileUpload" />
+		</set>
+		
+		<!-- preventionInfos属性，我与PreventionInfo的一对多 -->
+		<set name="preventionInfos" inverse="true" cascade="all">
+			<key column="disaterinfo_id"></key>
+			<one-to-many class="com.ty.design.entity.PreventionInfo" /> 
+		</set>
+	</class>
+
+</hibernate-mapping>

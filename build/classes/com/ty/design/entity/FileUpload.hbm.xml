@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.ty.design.entity">
+    <class name="FileUpload" table="des_fileUpload">
+        <id name="id" column="id">
+            <generator class="native"/> 
+        </id>
+        <property name="uuidname"></property>
+        <property name="filename"></property>
+        <property name="savepath"></property>
+        
+        <property name="times" type="timestamp"></property>
+        
+        <!-- disaterInfo属性，我与DisasterInfo的多对一 -->
+		<many-to-one name="disasterInfo" class="com.ty.design.entity.DisasterInfo" column="disaterinfo_id"></many-to-one>
+	</class>
+</hibernate-mapping>
